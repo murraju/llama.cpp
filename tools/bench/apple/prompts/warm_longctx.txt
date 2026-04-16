@@ -1,0 +1,19 @@
+The following notes describe an Apple Silicon optimization effort for a forked local inference engine.
+
+Notes:
+- Unified memory means bandwidth and residency pressure matter as much as raw FLOPs.
+- Decode paths suffer when the runtime copies large sampled-logit tensors back to host after a token has already been chosen on device.
+- Prefill and decode should not share the same command-buffer and offload heuristics.
+- Shared staging buffers help for repeated host-device copies because they avoid per-copy Metal buffer allocation churn.
+- We want a single portable arm64 binary, not per-chip binaries.
+- Any tensor API lane must stay behind device allowlists and fast fallback.
+- Benchmarking must compare the same workload across baseline and candidate builds.
+- Working set utilization is a useful signal for backing off aggressive GPU scheduling.
+- Gemma-family FFN kernels are a higher-value fast path than generic broad optimization.
+- Sparse runtime work is deferred until the dense Apple path is stable.
+
+Task:
+Create a compact technical brief with:
+1. a one-paragraph summary,
+2. five numbered optimization principles,
+3. a short conclusion on rollout safety.

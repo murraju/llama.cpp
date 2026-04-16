@@ -1,0 +1,86 @@
+{
+  "profiles": {
+    "cold_short": {
+      "cold_start": true,
+      "prompt_file": "prompts/cold_short.txt",
+      "prompt_mode": "file",
+      "target_context_bucket": "cold",
+      "n_predict": 128,
+      "repeat": 3
+    },
+    "short_ctx": {
+      "cold_start": false,
+      "prompt_file": "prompts/warm_short.txt",
+      "prompt_mode": "file",
+      "target_context_bucket": "short",
+      "n_predict": 128,
+      "repeat": 3
+    },
+    "rag_ctx": {
+      "cold_start": false,
+      "prompt_file": "prompts/warm_rag.txt",
+      "prompt_mode": "file",
+      "target_context_bucket": "rag",
+      "n_predict": 256,
+      "repeat": 3
+    },
+    "longctx_8k": {
+      "cold_start": false,
+      "prompt_file": "prompts/warm_longctx.txt",
+      "prompt_mode": "expand_to_tokens",
+      "target_context_bucket": "8k",
+      "target_prompt_tokens": 8064,
+      "n_predict": 128,
+      "repeat": 3,
+      "request_overrides": {
+        "cache_prompt": false
+      }
+    },
+    "longctx_16k": {
+      "cold_start": false,
+      "prompt_file": "prompts/warm_longctx.txt",
+      "prompt_mode": "expand_to_tokens",
+      "target_context_bucket": "16k",
+      "target_prompt_tokens": 16128,
+      "n_predict": 128,
+      "repeat": 3,
+      "request_overrides": {
+        "cache_prompt": false
+      }
+    }
+  },
+  "runs": [
+    {
+      "name": "default_path",
+      "_note": "Default run targets laptop-class hardware (16 GB-24 GB RAM) at 16k context ceiling. Sidecar-class profiles (32k, 128k) are out of scope for this matrix.",
+      "profile_order": ["cold_short", "short_ctx", "rag_ctx", "longctx_8k", "longctx_16k"],
+      "process_isolation": "shared",
+      "server": {
+        "host": "127.0.0.1",
+        "port": 8088,
+        "ctx_size": 16384,
+        "server_args": ["--parallel", "1"],
+        "env": {
+          "GGML_METAL_TENSOR_DISABLE": "1"
+        }
+      },
+      "request": {
+        "temperature": 0.0,
+        "top_k": 1,
+        "top_p": 1.0,
+        "min_p": 0.0,
+        "cache_prompt": true,
+        "stream": false
+      },
+      "artifacts": {
+        "model_path": "/Users/rajum/PrivacyAI/models/gemma-4-e4b/gemma-4-E4B-it-Q4_K_M.gguf",
+        "model_id": "gemma-4-e4b-it",
+        "quant": "Q4_K_M",
+        "artifact": "gguf"
+      },
+      "route": {
+        "type": "this-device"
+      }
+    }
+  ]
+}
