@@ -1,0 +1,1 @@
+Summarize three practical heuristics for prioritizing support tickets in a SaaS product. Keep it concise.
