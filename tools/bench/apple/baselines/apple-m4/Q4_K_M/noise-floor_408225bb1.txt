@@ -1,0 +1,24 @@
+run           profile      metric      baseline    candidate   delta  
+------------  -----------  ----------  ----------  ----------  -------
+default_path  cold_short   ttft_ms     203.2460    216.7030    +6.62% 
+default_path  cold_short   prompt_tps  93.4828     87.6776     -6.21% 
+default_path  cold_short   decode_tps  29.4314     24.0671     -18.23%
+default_path  longctx_16k  ttft_ms     80266.8580  92763.3790  +15.57%
+default_path  longctx_16k  prompt_tps  200.8675    173.8078    -13.47%
+default_path  longctx_16k  decode_tps  19.7911     16.7673     -15.28%
+default_path  longctx_8k   ttft_ms     28077.3640  37849.9070  +34.81%
+default_path  longctx_8k   prompt_tps  286.2804    212.3651    -25.82%
+default_path  longctx_8k   decode_tps  26.7907     20.6626     -22.87%
+default_path  rag_ctx      ttft_ms     123.3610    171.3670    +38.92%
+default_path  rag_ctx      prompt_tps  40.6534     30.1060     -25.94%
+default_path  rag_ctx      decode_tps  29.5733     25.4232     -14.03%
+default_path  short_ctx    ttft_ms     200.0150    302.0110    +50.99%
+default_path  short_ctx    prompt_tps  134.9899    89.4007     -33.77%
+default_path  short_ctx    decode_tps  29.1980     25.1895     -13.73%
+
+parity
+parity: default_path/cold_short: ok (543 chars)
+parity: default_path/longctx_16k: ok (585 chars)
+parity: default_path/longctx_8k: ok (621 chars)
+parity: default_path/rag_ctx: ok (1237 chars)
+parity: default_path/short_ctx: ok (761 chars)
